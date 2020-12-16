@@ -1,0 +1,47 @@
+﻿
+@{
+    ViewBag.Title = "CatalogoProdotti";
+}
+
+@model IEnumerable<Soasec_Oauth2_Project.Models.ProdottoModel>
+
+@{
+    ViewBag.Title = "Microsoft Mobiles";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<body>
+    <h1><span id="mobile" style="color:darkred">Catalogo del Pirata!</span></h1>
+    <div class="row">
+        @foreach (var prodotto in Model)
+        {
+        <div>
+            <div class="row">
+                <h4><span id="nomeprodotto" style="color:darkred">Nome del Prodotto: @prodotto.NomeProdotto</span></h4>
+            </div>
+            <p>
+                <img src="~/Icone/@prodotto.Immagine" style="overflow: hidden; position: relative; width:400px; height:400px;" />
+            </p>
+            <div class="row">
+                <h4><span id="categoriaprodotto" style="color:darkred">Categoria: @prodotto.CategoriaProdotto</span></h4>
+            </div>
+            <div class="row">
+                <h4><span id="descrizione" style="color:darkred">Descrizione: @prodotto.Descrizione</span></h4>
+            </div>
+            <div class="row">
+                <h4><span id="quantitadisponibile" style="color:darkred">Quantità Disponibile: @prodotto.QuantitaDisponibile</span></h4>
+            </div>
+            <div class="row">
+                <h4><span id="costoindobloni" style="color:darkred">Costo in Dobloni: @prodotto.CostoInDobloni</span></h4>
+            </div>
+            <div>
+                <a id="aggiungiprodotto" href="@Url.Action("AggiungiProdotto", "Scialuppa",prodotto)" class="btn btn-info" style="margin-left:10px">
+                    <span class="glyphicon glyphicon-shopping-cart"></span> Aggiungilo alla scialuppa!
+                </a>
+                <br />
+                <br />
+            </div>
+        </div>
+        }
+    </div>
+</body>

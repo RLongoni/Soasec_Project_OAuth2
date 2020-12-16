@@ -1,0 +1,36 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+
+<div class="jumbotron">
+    <h1>Progetto Soasec</h1>
+    <p class="lead">Questo è il progetto per il corso di Sicurezza delle Architetture Orientate ai Servizi</p>
+    <p class="lead">Autori: Riccardo Longoni 943531 e Stefano Belloni 940842</p>
+    <p><a href="https://github.com/RLongoni/Soasec_Progetto" class="btn btn-primary btn-lg">Progetto su GitHub&raquo;</a></p>
+</div>
+
+<div class="row">
+    <div class="col-md-4">
+        <h2>Cosa fa Questa Applicazione</h2>
+        <p>
+            Abbiamo sviluppato un prototipo di negozio online per pirati attraverso ASP.NET MVC. 
+            Per poter visualizzare il contenuto del catalogo e il carrello è richiesto il login dell'utente nella applicazione.
+        </p>
+    </div>
+    <div class="col-md-4">
+        <h2>Come Viene Gestito l'Accesso</h2>
+        <p>
+            Ci si può registrare attraverso la propria email ed una password.
+            Al momento del Login, viene richiesto all'Oauth Server un token di accesso, effettuando un controllo sulla esistenza dell'utente nel db.
+
+        </p>
+    </div>
+    <div class="col-md-4">
+        <h2>Gestione della Sicurezza</h2>
+        <p>
+            In aggiunta è stata implementata la funzione di doppia autenticazione. 
+            Rilasciando nel prorpio profilo il numero di telefono, e abilitando l'opzione dal profilo utente, 
+            al prossimo login con password verrà richiesto un codice per accedere.
+        </p>
+    </div>
+</div>

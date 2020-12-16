@@ -1,0 +1,154 @@
+﻿@model IEnumerable<Soasec_Oauth2_Project.Models.ProdottoModel>
+@{
+    ViewBag.Title = "MyOrder";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@{
+    int sum = 0;
+}
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<style type="text/css">
+    .label {
+        font-size: 10pt;
+        font-weight: bold;
+        font-family: Arial;
+    }
+
+    .contents {
+        border: 1px dotted black;
+        padding: 5px;
+        width: 300px;
+    }
+
+    .name {
+        color: #18B5F0;
+    }
+
+    .left {
+        float: left;
+        width: 50px;
+        height: 50px;
+    }
+
+    .right {
+        margin-left: 60px;
+        line-height: 50px;
+    }
+
+    .clear {
+        clear: both;
+    }
+
+    #footer {
+        position: fixed;
+        bottom: 0px;
+        height: 3px;
+        background-color: #666;
+        color: #eee;
+        width: 100%;
+    }
+</style>
+<script type="text/javascript">
+$(function () {
+    $("#btnPrint").click(function () {
+        var contents = $("#dvContents").html();
+        var frame1 = $('<iframe />');
+        frame1[0].name = "frame1";
+        frame1.css({ "position": "absolute", "top": "-1000000px" });
+        $("body").append(frame1);
+        var frameDoc = frame1[0].contentWindow ? frame1[0].contentWindow : frame1[0].contentDocument.document ? frame1[0].contentDocument.document : frame1[0].contentDocument;
+        frameDoc.document.open();
+        //Create a new HTML document.
+        frameDoc.document.write('<html><head><title>DIV Contents</title>');
+        frameDoc.document.write('</head><body>');
+        //Append the external CSS file.
+        frameDoc.document.write('<link href="style.css" rel="stylesheet" type="text/css" />');
+        //Append the DIV contents.
+        frameDoc.document.write(contents);
+        frameDoc.document.write('</body></html>');
+        frameDoc.document.close();
+        setTimeout(function () {
+            window.frames["frame1"].focus();
+            window.frames["frame1"].print();
+            frame1.remove();
+        }, 500);
+    });
+});
+</script>
+
+
+@if (Model == null)
+{
+    <div>
+        <h1>Carrello Vuoto</h1>
+    </div>
+}
+else
+{
+<div id="dvContents">
+
+    <table class="table table-hover" width="100%">
+        <thead>
+            <tr>
+
+                <th>Nome Prodotto</th>
+                <th>Categoria del Prodozzo</th>
+                <th>Immagine</th>
+                <th>Descrizione </th>
+                <th>Costo in Dobloni</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            @foreach (var x in Model)
+            {
+            <tr>
+
+                <td>@x.NomeProdotto</td>
+                <td>@x.CategoriaProdotto</td>
+                <td>
+                        <img src="~/Icone/@x.Immagine" style="overflow: hidden; position: relative; width:400px; height:400px;" />
+                </td>
+                <td>@x.Descrizione</td>
+                <td>@x.CostoInDobloni</td>
+                <td>
+                    <button id="btn_delete" class="btn btn-danger" data-slno="@x.NomeProdotto" onclick="location.href='@Url.Action("RimuoviProdotto","Scialuppa",x)'">
+                        Rimuovi
+                    </button>
+                </td>
+
+            </tr>
+
+            }
+
+        </tbody>
+
+        @foreach (var x in Model)
+        {
+            sum = Convert.ToInt32(x.CostoInDobloni) + sum;
+
+        }
+        <tfoot>
+            <tr>
+                <td></td>
+                <td></td>
+
+                <td><b>Totale:</b></td>
+                <td>
+                    <img src="~/Icone/aaa.png" height="20" width="20">  @sum
+                </td>
+            </tr>
+
+        </tfoot>
+
+    </table>
+    <div id="footer">
+        <img src="~/Templates/Footer.jpg" width="100" height="60" />
+    </div>
+
+    <button type="button" class="btn btn-success" onclick="location.href='@Url.Action("Catalogo","Home")'">Continua con il Catalogo</button>
+    <button type="button" class="btn btn-warning" onclick="location.href='@Url.Action("PiazzaOrdine","Scialuppa")'">Compra</button>
+</div>
+}
